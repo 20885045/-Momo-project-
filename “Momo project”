@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int balance = 1000; // default balance
+    int pin = 0000; // default pin
+    int attempts = 0; // count the number of wrong pin attempts
+    
+    while (true) {
+        int option;
+        cout << "Welcome to Mobile Money Service\n";
+        cout << "1. Check Balance\n";
+        cout << "2. Send Money\n";
+        cout << "3. Reset/Change Pin\n";
+        cout << "4. Exit\n";
+        cout << "Enter option: ";
+        cin >> option;
+        
+        if (option == 1) {
+            cout << "Your balance is: " << balance << endl;
+        } else if (option == 2) {
+            int amount;
+            int recipient;
+            int recipient_balance = 0;
+            cout << "Enter recipient's phone number: ";
+            cin >> recipient;
+            cout << "Enter amount: ";
+            cin >> amount;
+            
+            // deduct amount from sender's balance
+            balance -= amount;
+            
+            // add amount to recipient's balance
+            recipient_balance += amount;
+            cout << "Transaction successful. You have sent " << amount << " to " << recipient << endl;
+            cout << "Your new balance is: " << balance << endl;
+        } else if (option == 3) {
+            int old_pin;
+            int new_pin;
+            cout << "Enter old pin: ";
+            cin >> old_pin;
+            
+            // check if the old pin matches
+            if (old_pin == pin) {
+                cout << "Enter new pin: ";
+                cin >> new_pin;
+                pin = new_pin;
+                cout << "Pin changed successfully" << endl;
+            } else {
+                cout << "Incorrect pin. Please try again." << endl;
+            }
+        } else if (option == 4) {
+            cout << "Goodbye!";
+            break;
+        } else {
+            cout << "Invalid option. Please try again." << endl;
+        }
+        
+        // check if the number of attempts is more than three
+        attempts++;
+        if (attempts == 3) {
+            cout << "You have exceeded the maximum number of attempts. Program terminated." << endl;
+            break;
+        }
+    }
+    
+    return 0;
+}
